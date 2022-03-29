@@ -1,7 +1,7 @@
 
 import turtle
 
-from numpy import pad
+# from numpy import pad
 
 wn = turtle.Screen()
 wn.title("PingPong")
@@ -35,6 +35,19 @@ ball.penup()
 ball.goto(0,0)
 ball.dx = 1
 ball.dy = 1
+
+# drawing the score on the screen
+pen = turtle.Turtle()
+pen.speed(0)
+pen.color("white")
+pen.penup()
+pen.hideturtle()
+pen.goto(0,260)
+pen.write("palyer A: 0 Player B: 0 ", align="center", font=("Courier",24,"normal"))
+
+# score variable
+scoreA = 0
+scoreB = 0
 
 
 # functions to move ball and paddles 
@@ -88,9 +101,17 @@ while True:
   if(ball.xcor() > 390):
     ball.goto(0,0)
     ball.dx *=-1
+    scoreA +=1
+    pen.clear()
+    pen.write("palyer A: {} Player B: {} ".format(scoreA , scoreB), align="center", font=("Courier",24,"normal"))
+
   if(ball.xcor() < -390):
     ball.goto(0,0)
     ball.dx *=-1
+    scoreB +=1
+    pen.clear()
+    pen.write("palyer A: {} Player B: {} ".format(scoreA, scoreB), align="center", font=("Courier",24,"normal"))
+
     
   # Paddle and ball collision
   if (ball.xcor() > 340 and ball.xcor() < 350 and (ball.ycor() < paddleB.ycor() + 50 and ball.ycor() > paddleB.ycor() - 50 )):
