@@ -33,6 +33,64 @@ ball.shape("square")
 ball.color("white")
 ball.penup()
 ball.goto(0,0)
+ball.dx = 1
+ball.dy = 1
+
+
+# functions to move ball and paddles 
+def paddleAUp():
+  y = paddleA.ycor()
+  y += 20
+  paddleA.sety(y)
+
+def paddleADown():
+  y = paddleA.ycor()
+  y -= 20
+  paddleA.sety(y)
+  
+def paddleBUp():
+  y = paddleB.ycor()
+  y += 20
+  paddleB.sety(y)
+
+def paddleBDown():
+  y = paddleB.ycor()
+  y -= 20
+  paddleB.sety(y)
+
+# Ball x movement 
+
+
+# Keyboard events 
+wn.listen()
+wn.onkeypress(paddleAUp,"w")
+wn.onkeypress(paddleADown,"s")
+wn.onkeypress(paddleBUp,"Up")
+wn.onkeypress(paddleBDown,"Down")
+
+
 # main game loop
 while True:
   wn.update()
+  
+  # lets move the ball
+  ball.setx(ball.xcor() + ball.dx)
+  ball.sety(ball.ycor() + ball.dy)
+  
+  # border check
+  if(ball.ycor() > 290):
+    ball.sety(290)
+    ball.dy *=-1
+  if(ball.ycor() < -290):
+    ball.sety(-290)
+    ball.dy *=-1
+    
+  if(ball.xcor() > 390):
+    ball.goto(0,0)
+    ball.dx *=-1
+  if(ball.xcor() < -390):
+    ball.goto(0,0)
+    ball.dx *=-1
+    
+# Paddle and 
+  
