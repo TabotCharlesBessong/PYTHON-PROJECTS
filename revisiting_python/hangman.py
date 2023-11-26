@@ -1,19 +1,34 @@
-
 import random
 
-# create a greeting
-print("Welcome to our game")
-# create your world list
-words = ["hacker","county","random","equity","split"]
-# randomly chose a word from the list you have created
+print("Welcome to Hangman!")
+
+words = ["hacker", "bounty", "random"]
 secret_word = random.choice(words)
-# ask the user to guess a letter
-# make the program take input from the user and make it lowercase
-guess = input("Guess a letter: ").lower()
-print(guess)
-# check if the letter is in the word
+print("You got 5 guesses")
+display_word = []
 for letter in secret_word:
-  if letter == guess:
-    print("Correct!")
-  else:
-    print("wrong")
+  display_word += "_"
+print(display_word)
+
+num = 0
+game_over = False
+
+while not game_over:
+    guess = input("Guess a letter ").lower()
+    for position in range(len(secret_word)):
+        letter = secret_word[position]
+        if letter == guess:
+            display_word[position] = letter
+    # print(position)
+    if guess not in secret_word:
+        num += 1
+        guesses_left = 5 - num
+        print(f"You have {guesses_left} guesses left")
+        if num >= 5:
+            print("You Loser")
+            game_over = True
+    print(display_word)
+
+    if "_" not in display_word:
+        print("You Win")
+        game_over = True
