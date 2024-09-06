@@ -23,7 +23,8 @@ def home(request):
 
 
 def logout_user(request):
-  pass
+  logout(request)
+  messages.success(request,"You have successfully logout")
 
 def register_user(request):
-  pass
+  return render(request,"register.html",{})
