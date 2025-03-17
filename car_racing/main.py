@@ -47,7 +47,7 @@ class AbstractCar:
         self.move()
 
     def move_backward(self):
-        self.vel = max(self.vel - self.acceleration, -self.max_vel/2)
+        self.vel = max(self.vel - self.acceleration * 10, -self.max_vel/2)
         self.move()
 
     def move(self):
@@ -149,11 +149,28 @@ def draw(win,images,player_car):
   player_car.draw(win)
   pygame.display.update()
   
+def move_player(player_car):
+  keys = pygame.key.get_pressed()
+  moved = False
+  
+  if keys[pygame.K_LEFT]:
+    player_car.rotate(left=True)
+  if keys[pygame.K_RIGHT]:
+    player_car.rotate(right=True)
+  if keys[pygame.K_UP]:
+    moved = True
+    player_car.move_forward()
+  if keys[pygame.K_DOWN]:
+    player_car.move_backward()
+    
+  if not moved:
+    player_car.reduce_speed()
+  
 
 run = True
 clock = pygame.time.Clock()
 images = [(GRASS, (0, 0)), (TRACK, (0, 0)),(FINISH, FINISH_POSITION), (TRACK_BORDER, (0, 0))]
-player_car = PlayerCar(4,4)
+player_car = PlayerCar(8,8)
 
 while run:
   clock.tick(FPS)
@@ -165,5 +182,19 @@ while run:
       run = False
       break
     
+  move_player(player_car) 
+  
+  if player_car.collide(TRACK_BORDER_MASK) != None:
+      print("collide")
+      player_car.bounce()
     
+  finish_poi_collide =  player_car.collide(FINISH_MASK,*FINISH_POSITION)
+  if finish_poi_collide != None:
+    if finish_poi_collide[1] == 0:
+      player_car.bounce()
+    else:
+    #   print("winner")
+      player_car.reset()
+       
 pygame.quit()
+
