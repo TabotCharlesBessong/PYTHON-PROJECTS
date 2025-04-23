@@ -1,17 +1,26 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
 
-import './App.css'
-import { Button } from './components/ui/button'
 
-function App() {
+import "@/index.css";
+import Home from "./pages/Home";
 
+const paths = [
+  {
+    path: "/",
+    element: <Home />,
+  },
+];
+
+const BrowserRouter = createBrowserRouter(paths);
+
+const App = () => {
   return (
-    <div className="bg-red-400 w-[100vw] h-[100vh] flex items-center justify-center">
-      <p className="text-3xl text-bold text-white">
-        Hello world
-      </p>
-      <Button>Hello</Button>
-    </div>
-  )
-}
+    <MantineProvider>
+      <RouterProvider router={BrowserRouter} />
+    </MantineProvider>
+  );
+};
 
-export default App
+export default App;
